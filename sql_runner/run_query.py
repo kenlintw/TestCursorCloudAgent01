@@ -3,6 +3,7 @@ import pyodbc
 import sys
 
 ALLOWED_KEYWORDS = ["SELECT"]  # strict allowlist
+DEFAULT_DB_DRIVER = "ODBC Driver 18 for SQL Server"
 
 def is_safe_query(sql):
     sql_upper = sql.strip().upper()
@@ -20,7 +21,7 @@ def main():
         return
 
     conn_str = (
-        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+        f"DRIVER={{{os.getenv('DB_DRIVER', DEFAULT_DB_DRIVER)}}};"
         f"SERVER={os.getenv('DB_SERVER')};"
         f"DATABASE={os.getenv('DB_NAME')};"
         f"UID={os.getenv('DB_USER')};"
