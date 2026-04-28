@@ -4,6 +4,7 @@ import sys
 
 ALLOWED_KEYWORDS = ["SELECT"]  # strict allowlist
 DEFAULT_DB_DRIVER = "ODBC Driver 18 for SQL Server"
+DEFAULT_DB_ENCRYPT = "no"
 
 def is_safe_query(sql):
     sql_upper = sql.strip().upper()
@@ -25,7 +26,9 @@ def main():
         f"SERVER={os.getenv('DB_SERVER')};"
         f"DATABASE={os.getenv('DB_NAME')};"
         f"UID={os.getenv('DB_USER')};"
-        f"PWD={os.getenv('DB_PASSWORD')}"
+        f"PWD={os.getenv('DB_PASSWORD')};"
+        f"Encrypt={os.getenv('DB_ENCRYPT', DEFAULT_DB_ENCRYPT)};"
+        f"TrustServerCertificate={os.getenv('DB_TRUST_SERVER_CERTIFICATE', 'yes')}"
     )
 
     conn = pyodbc.connect(conn_str)
